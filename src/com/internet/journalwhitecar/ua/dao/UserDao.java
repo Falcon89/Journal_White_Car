@@ -21,8 +21,6 @@ public class UserDao {
 	private final String READ_ALL_FROM_USER_SQL = "select * from user";
 	private final String GET_BUCKET_NUMEROUS = "select order_number from user where user_id=?";
 	private final String SET_BUCKET_NUMEROUS = "update user set order_number=?  where user_id=?";
-	private final String READ_EMAIL_FROM_USER_SQL = "select *from user where email like ?";
-	private final String READ_ALL_FROM_USER_SQL2 = "select *from user where email like ?";
 
 	private PreparedStatement preparedStatement;
 	private Connection connectionManager;

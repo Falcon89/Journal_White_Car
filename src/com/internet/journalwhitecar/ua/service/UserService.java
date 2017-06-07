@@ -20,6 +20,10 @@ public class UserService {
 	public List<User> getAllUsers() {
 		return userDao.getAllUsers();
 	}
+	public User getUser(Integer userId) {
+		User user = userDao.getUser(userId);
+		return user;
+	}
 
 	public boolean checkDoesLoginAreadyUsed(String login) {
 		List<User> listOfUser = getAllUsers();

@@ -1,0 +1,24 @@
+
+.product-wrapper .btn{
+  border-bottom:2px solid #74898a;
+}
+.product-wrapper .btn:last-child{
+  border-bottom:2px solid #95a5a6;
+}
+
+.form-buttons .btn{
+  width:100px;
+}
+
+.fa-wrench{
+  color:white;
+}
+
+.fa-wrench-header{
+  margin:3px 0;
+  font-size: 2em;
+}
+
+.btn-settings{
+  margin-top:-4px;
+}

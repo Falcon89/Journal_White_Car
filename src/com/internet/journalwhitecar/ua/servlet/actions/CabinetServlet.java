@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.internet.journalwhitecar.ua.model.User;
 import com.internet.journalwhitecar.ua.service.UserService;
@@ -24,7 +25,13 @@ public class CabinetServlet extends HttpServlet {
 		List<User> listOfUsers=userService.getAllUsers();
 		for (User user : listOfUsers) {
 			if(user.getEmail().equals(login) && user.getPassword().equals(password)){
-				request.getRequestDispatcher("/admin").forward(request, response);
+				
+			HttpSession session=request.getSession();
+			
+			session.setAttribute("userLogin", user.getEmail());
+			session.setAttribute("userRole", user.getRole());
+			
+				request.getRequestDispatcher("/services").forward(request, response);
 				System.out.println("Login Success : "+login);
 			}
 		}

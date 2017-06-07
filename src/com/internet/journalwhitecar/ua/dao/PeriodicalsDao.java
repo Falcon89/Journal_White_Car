@@ -7,48 +7,44 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.internet.journalwhitecar.ua.model.Periodicals;
 import com.internet.journalwhitecar.ua.util.ConnectionManager;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 public class PeriodicalsDao {
-	private final String CREATE_PERIODICALS_SQL = "insert into periodicals(`periodicals_name`, `periodicals_description`,`periodicals_image`,`price_for_month`,`periodicals_last_modified`,`periodicity`,`isdelete`) values(?,?,?,?,?,?,0) ";
-	private final String UPDATE_PERIODICALS_SQL = "update periodicals set  periodicals_name=?, periodicals_description=?, periodicals_image=?, price_for_month=? , periodicals_last_modified=? , periodicity=?  where periodicals_id=? ";
-	private final String READ_PERIODICALS_BY_Id = "select * from periodicals where periodicals_id=? ";
-	private final String DELETE_FROM_BY_Id = "update periodicals set  isdelete=1, periodicals_last_modified=? where periodicals_id=?";
-	private final String READ_ALL_FROM_PERIODICALS_SQL = "select * from periodicals ";
-	private final String RESTORE_PERIODICAL="update periodicals set  isdelete=0 where periodicals_id=?";
-	
-	
+	private final String CREATE_PERIODICALS_SQL = "insert into periodicals(`name`, `description`,`image`,`priceForPublishment`,`lastModified`,`periodicity`,`isDeleted`) values(?,?,?,?,?,?,0) ";
+	private final String UPDATE_PERIODICALS_SQL = "update periodicals set  name=?, description=?, image=?, priceForPublishment=? , lastModified=? , periodicity=? , isDeleted=?  where id=? ";
+	private final String READ_PERIODICALS_BY_Id = "select * from periodicals where id=? ";
+	private final String DELETE_FROM_BY_Id = "update periodicals set  isDeleted=1, lastModified=? where id=?";
+	private final String READ_ALL_FROM_PERIODICALS_SQL = "select * from periodicals";
+	private final String RESTORE_PERIODICAL = "update periodicals set  isdelete=0 where id=?";
+
 	private PreparedStatement preparedStatement;
 	private Connection connectionManager;
-	
-	
+
 	public PeriodicalsDao() {
-		
+
 		connectionManager = (Connection) ConnectionManager.makeConnection();
 
 	}
 
-	
-	
-	public void restorePeriodical(Integer periodicalId){
+	public void restorePeriodical(Integer periodicalId) {
 		try {
 			preparedStatement = (PreparedStatement) connectionManager.prepareStatement(RESTORE_PERIODICAL);
-			preparedStatement.setInt(1,periodicalId);
+			preparedStatement.setInt(1, periodicalId);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-			
+
 		}
 
-		
 	}
-	
-	
-	
+
 	public Integer insertPeriodicals(Periodicals periodicals) {
 
 		Integer generatedKey = 0;
@@ -58,6 +54,14 @@ public class PeriodicalsDao {
 			preparedStatement.setString(1, periodicals.getName());
 			preparedStatement.setString(2, periodicals.getDescription());
 			preparedStatement.setString(3, periodicals.getImage());
+
+			/*
+			 * if (periodicals.getImage() != null) {
+			 * preparedStatement.setString(3, periodicals.getImage());} if
+			 * (periodicals.getImage() == null) {
+			 * periodicals.setImage("pages/images/car/not-image.jpg"); }
+			 */
+
 			preparedStatement.setInt(4, periodicals.getPriceForPublishment());
 			long time = System.currentTimeMillis();
 			Timestamp timestamp = new Timestamp(time);
@@ -70,7 +74,7 @@ public class PeriodicalsDao {
 			if (rs.next()) {
 				generatedKey = rs.getInt(1);
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
@@ -84,19 +88,23 @@ public class PeriodicalsDao {
 
 			preparedStatement.setString(1, periodicals.getName());
 			preparedStatement.setString(2, periodicals.getDescription());
-			preparedStatement.setString(3, periodicals.getImage());
+			if (periodicals.getImage() != null) {
+				preparedStatement.setString(3, periodicals.getImage());
+			}
 			preparedStatement.setInt(4, periodicals.getPriceForPublishment());
 			long time = System.currentTimeMillis();
 			Timestamp timestamp = new Timestamp(time);
 			preparedStatement.setTimestamp(5, timestamp);
 			preparedStatement.setInt(6, periodicals.getPeriodicity());
-			preparedStatement.setInt(7, periodicalsId);
+			//
+			preparedStatement.setBoolean(7, periodicals.getIsDeleted());
 
+			//
+			preparedStatement.setInt(8, periodicalsId);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
-
 	}
 
 	public void deletePeriodicals(int periodicalsId) {
@@ -124,23 +132,20 @@ public class PeriodicalsDao {
 			rs.next();
 
 			periodicals = new Periodicals();
-			periodicals.setId(rs.getInt("periodicals_id"));
-			periodicals.setName(rs.getString("periodicals_name"));
-			periodicals.setDescription(rs.getString("periodicals_description"));
-			periodicals.setImage(rs.getString("periodicals_image"));
-			periodicals.setPriceForPublishment(rs.getInt("price_for_month"));
-			periodicals.setLastModified(rs.getTimestamp("periodicals_last_modified"));
+			periodicals.setId(rs.getInt("id"));
+			periodicals.setName(rs.getString("name"));
+			periodicals.setDescription(rs.getString("description"));
+			periodicals.setImage(rs.getString("image"));
+			periodicals.setPriceForPublishment(rs.getInt("priceForPublishment"));
+			periodicals.setLastModified(rs.getTimestamp("lastModified"));
+
+			periodicals.setIsDeleted(rs.getBoolean("isDeleted"));
+
 			periodicals.setPeriodicity(rs.getInt("periodicity"));
 
-//			if (rs.getInt("isdelete") == 1) {
-//				periodicals.setIsDeleted(true);
-//			} else {
-//				periodicals.setIsDeleted(false);
-//			}
-//
-//			if (periodicals.getIsDeleted()) {
-//				periodicals = null;
-//			}
+			/*
+			 * if (periodicals.getIsDeleted() == true) { return null; }
+			 */
 
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -159,62 +164,18 @@ public class PeriodicalsDao {
 
 				Periodicals periodicals = new Periodicals();
 				periodicals = new Periodicals();
-				periodicals.setId(rs.getInt("periodicals_id"));
-				periodicals.setName(rs.getString("periodicals_name"));
-				periodicals.setDescription(rs.getString("periodicals_description"));
-				periodicals.setImage(rs.getString("periodicals_image"));
-				periodicals.setPriceForPublishment(rs.getInt("price_for_month"));
-				periodicals.setLastModified(rs.getTimestamp("periodicals_last_modified"));
+				periodicals.setId(rs.getInt("id"));
+				periodicals.setName(rs.getString("name"));
+				periodicals.setDescription(rs.getString("description"));
+				periodicals.setImage(rs.getString("image"));
+				periodicals.setPriceForPublishment(rs.getInt("priceForPublishment"));
+				periodicals.setLastModified(rs.getTimestamp("lastModified"));
 				periodicals.setPeriodicity(rs.getInt("periodicity"));
+				periodicals.setIsDeleted(rs.getBoolean("isDeleted"));
 
-//				if (rs.getInt("isdelete") == 1) {
-//					periodicals.setIsDeleted(true);
-//				} else {
-//					periodicals.setIsDeleted(false);
-//				}
-//
-//				if (periodicals.getIsDeleted()) {
-//					periodicals = null;
-//				} else {
-//					listOfPeriodicals.add(periodicals);
-//				}
-
-			}
-		} catch (SQLException  e) {
-			System.out.println(e);
-		}
-
-		return listOfPeriodicals;
-	}
-
-	
-	public List<Periodicals> getAllDeletedPeriodicals() {
-		List<Periodicals> listOfPeriodicals = new ArrayList<Periodicals>();
-		try {
-			preparedStatement = (PreparedStatement) connectionManager.prepareStatement(READ_ALL_FROM_PERIODICALS_SQL);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-
-				Periodicals periodicals = new Periodicals();
-				periodicals = new Periodicals();
-				periodicals.setId(rs.getInt("periodicals_id"));
-				periodicals.setName(rs.getString("periodicals_name"));
-				periodicals.setDescription(rs.getString("periodicals_description"));
-				periodicals.setImage(rs.getString("periodicals_image"));
-				periodicals.setPriceForPublishment(rs.getInt("price_for_month"));
-				periodicals.setLastModified(rs.getTimestamp("periodicals_last_modified"));
-				periodicals.setPeriodicity(rs.getInt("periodicity"));
-
-//				if (rs.getInt("isdelete") == 1) {
-//					periodicals.setIsDeleted(true);
-//				} else {
-//					periodicals.setIsDeleted(false);
-//				}
-//
-//				if (periodicals.getIsDeleted()) {
-//					listOfPeriodicals.add(periodicals);
-//				} 
-
+				if (!periodicals.getIsDeleted()) {
+					listOfPeriodicals.add(periodicals);
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -222,8 +183,7 @@ public class PeriodicalsDao {
 
 		return listOfPeriodicals;
 	}
-	
-	
+
 	public List<Periodicals> getAllPeriodicalsWithDeleted() {
 		List<Periodicals> listOfPeriodicals = new ArrayList<Periodicals>();
 		try {
@@ -233,23 +193,21 @@ public class PeriodicalsDao {
 
 				Periodicals periodicals = new Periodicals();
 				periodicals = new Periodicals();
-				periodicals.setId(rs.getInt("periodicals_id"));
-				periodicals.setName(rs.getString("periodicals_name"));
-				periodicals.setDescription(rs.getString("periodicals_description"));
-				periodicals.setImage(rs.getString("periodicals_image"));
-				periodicals.setPriceForPublishment(rs.getInt("price_for_month"));
-				periodicals.setLastModified(rs.getTimestamp("periodicals_last_modified"));
+				periodicals.setId(rs.getInt("id"));
+				periodicals.setName(rs.getString("name"));
+				periodicals.setDescription(rs.getString("description"));
+				periodicals.setImage(rs.getString("image"));
+				periodicals.setPriceForPublishment(rs.getInt("priceForPublishment"));
+				periodicals.setLastModified(rs.getTimestamp("lastModified"));
 				periodicals.setPeriodicity(rs.getInt("periodicity"));
 
-//				if (rs.getInt("isdelete") == 1) {
-//					periodicals.setIsDeleted(true);
-//				} else {
-//					periodicals.setIsDeleted(false);
-//				}
+				if (rs.getInt("isDeleted") == 1) {
+					periodicals.setIsDeleted(true);
+				} else {
+					periodicals.setIsDeleted(false);
+				}
 
-				
-					listOfPeriodicals.add(periodicals);
-				
+				listOfPeriodicals.add(periodicals);
 
 			}
 		} catch (SQLException e) {
@@ -258,5 +216,5 @@ public class PeriodicalsDao {
 
 		return listOfPeriodicals;
 	}
-	
+
 }

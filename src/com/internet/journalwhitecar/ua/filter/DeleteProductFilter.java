@@ -1,41 +1,43 @@
 package com.internet.journalwhitecar.ua.filter;
 
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LogoutFilter implements Filter {
+@WebFilter("/delete-productFilter")
+public class DeleteProductFilter implements Filter {
+
+	public DeleteProductFilter() {
+	}
 
 	public void destroy() {
 	}
+
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		try {
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+		HttpSession session = httpServletRequest.getSession();
 
-			HttpSession session = ((HttpServletRequest) request).getSession();
-			String role = (String) session.getAttribute("role");
-
-			if (role != null & !role.equals("")) {
+		String userRole = (String) ((HttpServletRequest) request).getSession().getAttribute("userRole");
+		if (userRole != null) {
+			if (userRole.equals("ADMIN")) {
 				chain.doFilter(request, response);
 			} else {
-				((HttpServletRequest) request).getRequestDispatcher("index").forward(request, response);
-
+				((HttpServletResponse) response).sendRedirect("pages/errorpage.jsp");
 			}
-		} catch (Exception e) {
-			((HttpServletRequest) request).getRequestDispatcher("pages/errorpage.jsp").forward(request, response);
-			e.printStackTrace();
+		} else {
+			((HttpServletResponse) response).sendRedirect("pages/errorpage.jsp");
 		}
-
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
-
 }

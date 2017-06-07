@@ -27,6 +27,9 @@
 	type="text/css">
 <link href="pages/css/templatemo_style.css" rel="stylesheet"
 	type="text/css">
+<link href="pages/css/egkepq_tariff.css" rel="stylesheet"
+	type="text/css">
+<link href="pages/css/style_tariff.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="templatemo-logo visible-xs-block">
@@ -47,11 +50,11 @@
 				<ul class="nav nav-stacked templatemo-nav">
 					<li><a href="${pageContext.servletContext.contextPath}/"
 						class="active"><i class="fa fa-home fa-medium"></i>Homepage</a></li>
-				
-						<li><a
-							href="${pageContext.servletContext.contextPath}/products"><i
-								class="fa fa-shopping-cart fa-medium"></i>Journals</a></li>
-					
+
+					<li><a
+						href="${pageContext.servletContext.contextPath}/products"><i
+							class="fa fa-shopping-cart fa-medium"></i>Journals</a></li>
+
 					<li><a
 						href="${pageContext.servletContext.contextPath}/services"><i
 							class="fa fa-send-o fa-medium"></i>Services</a></li>
@@ -64,10 +67,11 @@
 					<br>
 					<li><a href="${pageContext.servletContext.contextPath}/login"><i
 							class="fa fa-sign-in fa-medium"></i>Login in/Registration</a></li>
-
+					<%--  <c:if test="${userRole eq 'ADMIN'}"> 
+ --%>
 					<li><a href="${pageContext.servletContext.contextPath}/admin"><i
 							class="fa fa-briefcase fa-medium"></i>Admin panel</a></li>
-
+					<!-- </c:if>  -->
 				</ul>
 			</div>
 		</div>
@@ -76,6 +80,132 @@
 			class="col-lg-6 col-md-6 col-sm-6 col-xs-12 white-bg right-container">
 			<h1 class="logo-right hidden-xs margin-bottom-60">White Car</h1>
 			<div class="tm-right-inner-container">
+				<h1 class="templatemo-header">Tariff plan</h1>
+				<!--				tariff-->
+
+				<div class="table">
+					<div class="table-cell"></div>
+					<div class="table-cell plattform">
+						<h3>Platform</h3>
+						<a href="${pageContext.servletContext.contextPath}/login"
+							class="btn">Register Status User</a>
+					</div>
+					<div class="table-cell enterprise">
+						<h3>Enterprise</h3>
+						<a href="${pageContext.servletContext.contextPath}/login"
+							class="btn">Register Status Enterprise</a>
+					</div>
+					<div class="table-cell cell-feature">Instant delivery</div>
+					<div class="table-cell">
+						<svg width="18" height="18" viewBox="0 0 18 18"
+							xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell">
+						<svg class="enterprise-check" width="18" height="18"
+							viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell cell-feature">Personal contact person</div>
+					<div class="table-cell">
+						<svg width="18" height="18" viewBox="0 0 18 18"
+							xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell">
+						<svg class="enterprise-check" width="18" height="18"
+							viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell cell-feature">Pay only for what you
+						use</div>
+					<div class="table-cell">
+						<svg width="18" height="18" viewBox="0 0 18 18"
+							xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell">
+						<svg class="enterprise-check" width="18" height="18"
+							viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell cell-feature">Real-time fee reporting</div>
+					<div class="table-cell">
+						<svg width="18" height="18" viewBox="0 0 18 18"
+							xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell">
+						<svg class="enterprise-check" width="18" height="18"
+							viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell cell-feature">Volume discounts</div>
+					<div class="table-cell"></div>
+					<div class="table-cell">
+						<svg class="enterprise-check" width="18" height="18"
+							viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" /> </svg>
+					</div>
+					<div class="table-cell cell-feature">Account management</div>
+					<div class="table-cell"></div>
+					<div class="table-cell">
+						<svg class="enterprise-check" width="18" height="18"
+							viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell cell-feature">Migration assistance</div>
+					<div class="table-cell"></div>
+					<div class="table-cell">
+						<svg class="enterprise-check" width="18" height="18"
+							viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+					<div class="table-cell cell-feature">24/7 support</div>
+					<div class="table-cell"></div>
+					<div class="table-cell">
+						<svg class="enterprise-check" width="18" height="18"
+							viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						<title>check_blue</title>
+						<path
+							d="M6.116 14.884c.488.488 1.28.488 1.768 0l10-10c.488-.488.488-1.28 0-1.768s-1.28-.488-1.768 0l-9.08 9.15-4.152-4.15c-.488-.488-1.28-.488-1.768 0s-.488 1.28 0 1.768l5 5z"
+							fill="limegreen" fill-rule="evenodd" /> </svg>
+					</div>
+				</div>
+				<!--				end tariff-->
 				<h1 class="templatemo-header">Comapany</h1>
 				<img src="pages/images/car/21.jpg" alt="Wooden Desk"
 					class="img-thumbnail">
@@ -126,6 +256,7 @@
 					neque malesuada, ut tristique tortor viverra.</p>
 				<a href="${pageContext.servletContext.contextPath}/about"
 					class="btn btn-warning">Our Details</a> </article>
+
 				<footer>
 				<p
 					class="col-lg-6 col-md-6 col-sm-12 col-xs-12 templatemo-copyright">Copyright

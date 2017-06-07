@@ -18,8 +18,8 @@
 
 </head>
 <body>
-	<h1 style="text-align: center;">Sorry my friend, but u have no access to this URL! First try Login.</h1>
-	<a href="login" style="float:right">Go back to main page</a>
-	<img  src="images/ban.jpg" style="margin-left: 450px">
+	<!-- <h1 style="text-align: center;">Sorry my friend, but u have no access to this URL! First try Login.</h1> -->
+	<a href="${pageContext.servletContext.contextPath}/" style="float:right"><img  src="images/go_back.jpg" width=200px;></a>
+	<img  src="images/no.jpg" style="margin-left: 450px">
 </body>
 </html>

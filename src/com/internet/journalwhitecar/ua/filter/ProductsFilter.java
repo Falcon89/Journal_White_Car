@@ -11,19 +11,17 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.internet.journalwhitecar.ua.dao.UserDao;
 import com.internet.journalwhitecar.ua.service.UserService;
 
-/**
- * Servlet Filter implementation class ProductsFilter
- */
 @WebFilter("/products")
 public class ProductsFilter implements Filter {
+	private UserService userService;
 	UserDao userDao = new UserDao();
 
 	public ProductsFilter() {
-
 	}
 
 	public void destroy() {
@@ -31,21 +29,26 @@ public class ProductsFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		String userDao = (String) ((HttpServletRequest) request).getSession().getAttribute("userId");
-		UserService service = new UserService();
-		UserDao dao = new UserDao();
-//		service.checkDoesLoginAreadyUsed("email");
-//		service.checkDoesLoginAreadyUsed(userDao);
-		if(dao.getAllUsers().equals("admin")){
-			chain.doFilter(request, response);
-		}
-		else{
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+		HttpSession session = httpServletRequest.getSession();
+
+		String userRole = (String) ((HttpServletRequest) request).getSession().getAttribute("userRole");
+		if (userRole != null) {
+			if (userRole.equals("ADMIN") || (userRole.equals("USER"))) {
+				
+				/* || (userRole.equals("USER") )*/
+				chain.doFilter(request, response);
+			
+			}else {
+				((HttpServletResponse) response).sendRedirect("pages/errorpage.jsp");
+			}
+		} else {
 			((HttpServletResponse) response).sendRedirect("pages/errorpage.jsp");
 		}
+		
+		
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
-
 }
-
